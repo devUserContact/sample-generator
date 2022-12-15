@@ -76,13 +76,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "generate-instrument-samples"
-version = "0.1.0"
-dependencies = [
- "fundsp",
-]
-
-[[package]]
 name = "generic-array"
 version = "0.14.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -221,6 +214,13 @@ dependencies = [
  "strength_reduce",
  "transpose",
  "version_check",
+]
+
+[[package]]
+name = "sample-generator"
+version = "0.1.0"
+dependencies = [
+ "fundsp",
 ]
 
 [[package]]
