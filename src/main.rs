@@ -8,6 +8,7 @@ fn main() {
         880.00, 1046.50, 1244.51, 1479.98, 1760.00, 2093.00, 2489.02, 2959.96, 3520.00, 4186.01,
         4978.03, 5919.91, 7040.00,
     ];
+    //    let _dim_freq: (str, f64) =
     const FIVE_SECONDS: f64 = 5.00;
     let _wave2 = Wave64::render(44100.0, FIVE_SECONDS, &mut (pink()));
     for freq in dim_freq.iter() {
