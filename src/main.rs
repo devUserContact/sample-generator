@@ -1,4 +1,5 @@
 use fundsp::hacker::*;
+use std::fs;
 
 fn main() {
     const _HOUR: f64 = 60.00 * 10.00 * 6.00;
@@ -8,21 +9,22 @@ fn main() {
         880.00, 1046.50, 1244.51, 1479.98, 1760.00, 2093.00, 2489.02, 2959.96, 3520.00, 4186.01,
         4978.03, 5919.91, 7040.00,
     ];
-    let _pitch_values: [&str; 36] = [
-        "c0", "eb0", "gb0", "a0", "c1", "eb1", "gb1", "a1", "c2", "eb2", "gb2", "a2", "c3", "eb3",
-        "gb3", "a3", "c4", "eb4", "gb4", "a4", "c5", "eb5", "gb5", "a5", "c6", "eb6", "gb6", "a6",
-        "c7", "eb7", "gb7", "a7", "c8", "eb8", "gb8", "a8",
-
+    let pitch_values: [&str; 36] = [
+        "0c", "0eb", "0gb", "0a", "1c", "1eb", "1gb", "1a", "2c", "2eb", "2gb", "2a", "3c", "3eb",
+        "3gb", "3a", "4c", "4eb", "4gb", "4a", "5c", "5eb", "5gb", "5a", "6c", "6eb", "6gb", "6a",
+        "7c", "7eb", "7gb", "7a", "8c", "8eb", "8gb", "8a",
     ];
+    fs::create_dir("samples").unwrap();
+
     const FIVE_SECONDS: f64 = 5.00;
     let _wave2 = Wave64::render(44100.0, FIVE_SECONDS, &mut (pink()));
-    for freq in dim_freq.iter() {
+    for index in 0..dim_freq.len() {
         let wave1 = Wave64::render(
             44100.0,
             FIVE_SECONDS,
-            &mut (sine_hz(freq.to_f64()) - pink()),
+            &mut (sine_hz(dim_freq[index].to_f64()) - pink()),
         );
-        let freq_str = format!("{}.wav", freq.to_string());
+        let freq_str = format!("samples/{}.wav", pitch_values[index]);
         wave1
             .save_wav32(freq_str)
             .expect("Could not save wav file.")
