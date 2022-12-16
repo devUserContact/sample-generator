@@ -8,7 +8,12 @@ fn main() {
         880.00, 1046.50, 1244.51, 1479.98, 1760.00, 2093.00, 2489.02, 2959.96, 3520.00, 4186.01,
         4978.03, 5919.91, 7040.00,
     ];
-    //    let _dim_freq: (str, f64) =
+    let _pitch_values: [&str; 36] = [
+        "c0", "eb0", "gb0", "a0", "c1", "eb1", "gb1", "a1", "c2", "eb2", "gb2", "a2", "c3", "eb3",
+        "gb3", "a3", "c4", "eb4", "gb4", "a4", "c5", "eb5", "gb5", "a5", "c6", "eb6", "gb6", "a6",
+        "c7", "eb7", "gb7", "a7", "c8", "eb8", "gb8", "a8",
+
+    ];
     const FIVE_SECONDS: f64 = 5.00;
     let _wave2 = Wave64::render(44100.0, FIVE_SECONDS, &mut (pink()));
     for freq in dim_freq.iter() {
