@@ -1,6 +1,7 @@
 use fundsp::hacker::*;
 use std::fs;
 
+
 fn main() {
     const _HOUR: f64 = 60.00 * 10.00 * 6.00;
     let dim_freq: [f64; 36] = [
@@ -10,9 +11,9 @@ fn main() {
         4978.03, 5919.91, 7040.00,
     ];
     let pitch_values: [&str; 36] = [
-        "0c", "0eb", "0gb", "0a", "1c", "1eb", "1gb", "1a", "2c", "2eb", "2gb", "2a", "3c", "3eb",
-        "3gb", "3a", "4c", "4eb", "4gb", "4a", "5c", "5eb", "5gb", "5a", "6c", "6eb", "6gb", "6a",
-        "7c", "7eb", "7gb", "7a", "8c", "8eb", "8gb", "8a",
+        "0c", "0eb", "0gb", "0xa", "1c", "1eb", "1gb", "1xa", "2c", "2eb", "2gb", "2xa", "3c",
+        "3eb", "3gb", "3xa", "4c", "4eb", "4gb", "4xa", "5c", "5eb", "5gb", "5xa", "6c", "6eb",
+        "6gb", "6xa", "7c", "7eb", "7gb", "7xa", "8c", "8eb", "8gb", "8xa",
     ];
     fs::create_dir("samples").unwrap();
 
@@ -22,8 +23,9 @@ fn main() {
         let wave1 = Wave64::render(
             44100.0,
             FIVE_SECONDS,
-            &mut (sine_hz(dim_freq[index].to_f64()) - pink()),
+            &mut (sine_hz(dim_freq[index].to_f64()) | (pink() * 0.4) >> chorus(0, 0.01, 0.35, 0.75) | brown())
         );
+
         let freq_str = format!("samples/{}.wav", pitch_values[index]);
         wave1
             .save_wav32(freq_str)
