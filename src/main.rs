@@ -1,7 +1,6 @@
 use fundsp::hacker::*;
 use std::fs;
 
-
 fn main() {
     const _HOUR: f64 = 60.00 * 10.00 * 6.00;
     let dim_freq: [f64; 36] = [
@@ -17,15 +16,18 @@ fn main() {
     ];
     fs::create_dir("samples").unwrap();
 
-    const FIVE_SECONDS: f64 = 5.00;
-    let _wave2 = Wave64::render(44100.0, FIVE_SECONDS, &mut (pink()));
+    const TIME: f64 = 2.00;
+    let _wave2 = Wave64::render(44100.0, TIME, &mut (pink()));
     for index in 0..dim_freq.len() {
-        let wave1 = Wave64::render(
+        let mut wave1 = Wave64::render(
             44100.0,
-            FIVE_SECONDS,
-            &mut (sine_hz(dim_freq[index].to_f64()) | (pink() * 0.4) >> chorus(0, 0.01, 0.35, 0.75) | brown())
+            TIME,
+            &mut ((sine_hz(dim_freq[index].to_f64()) - saw_hz(dim_freq[index].to_f64() - 4.0))
+                - oversample(pink())),
         );
-
+        wave1.fade_in(0.03);
+        wave1.fade_out(2.0);
+        wave1.normalize();
         let freq_str = format!("samples/{}.wav", pitch_values[index]);
         wave1
             .save_wav32(freq_str)
